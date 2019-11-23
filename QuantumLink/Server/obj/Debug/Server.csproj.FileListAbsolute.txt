@@ -1,0 +1,6 @@
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\bin\Debug\Server.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\bin\Debug\Server.exe
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\bin\Debug\Server.pdb
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\obj\Debug\Server.exe
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\obj\Debug\Server.pdb
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Server\obj\Debug\Server.csprojAssemblyReference.cache

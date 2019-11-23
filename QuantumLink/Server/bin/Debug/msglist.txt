@@ -1,0 +1,4 @@
+MichaelWang	TimWhite	I LIKE PUSSSYYYY!!!!!!	11/23/2019 2:03:15 PM	False
+ANONYMOUS_USER	AdolfHitler	Why do you hate jews?	11/23/2019 2:07:04 PM	True
+AdolfHitler	MichaelWang	Because there a bunch of Scrooges.	11/23/2019 2:07:55 PM	True
+MichaelWang	AdolfHitler	cool bro	11/23/2019 2:08:17 PM	False
