@@ -1,4 +1,13 @@
 MichaelWang	TimWhite	I LIKE PUSSSYYYY!!!!!!	11/23/2019 2:03:15 PM	False
-ANONYMOUS_USER	AdolfHitler	Why do you hate jews?	11/23/2019 2:07:04 PM	True
-AdolfHitler	MichaelWang	Because there a bunch of Scrooges.	11/23/2019 2:07:55 PM	True
-MichaelWang	AdolfHitler	cool bro	11/23/2019 2:08:17 PM	False
+POSTMASTER	msgboard::PortolaMS	Welcome to this message board! It was created on 11/27/2019 6:43:58 PM.	11/27/2019 6:43:58 PM	False
+MichaelWang	msgboard::PortolaMS	help	11/27/2019 6:44:27 PM	False
+MichaelWang	msgboard::PortolaMS	you guys know the homework?	11/27/2019 6:44:40 PM	False
+MichaelWang	msgboard::PortolaMS	I can send a message through the sendmsg command.	11/27/2019 6:45:46 PM	False
+MichaelWang	msgboard::PortolaMS	newboard PolIncorrect	11/27/2019 6:46:16 PM	False
+MichaelWang	msgboard::PortolaMS	newboard FunnyShit	11/27/2019 6:46:21 PM	False
+MichaelWang	msgboard::PortolaMS	newboard CoolShit	11/27/2019 6:46:27 PM	False
+MichaelWang	msgboard::PortolaMS	logout	11/27/2019 6:46:32 PM	False
+POSTMASTER	msgboard::CoolShit	Welcome to this message board! It was created on 11/27/2019 6:50:40 PM.	11/27/2019 6:50:40 PM	False
+POSTMASTER	msgboard::FunnyShit	Welcome to this message board! It was created on 11/27/2019 6:50:45 PM.	11/27/2019 6:50:45 PM	False
+MichaelWang	msgboard::FapplePie	I cleared the message board	11/27/2019 7:27:10 PM	False
+MichaelWang	msgboard::FapplePie	help	11/27/2019 7:27:17 PM	False

@@ -15,7 +15,8 @@ namespace Server
         static TcpListener listener;
         public static List<Session> sessions;
         public static List<Message> messages;
-        public static int version = 1;
+        public static List<MessageBoard> messageBoards;
+        public static int version = 2;
 
         static void LoadAccounts()
         {
@@ -58,6 +59,20 @@ namespace Server
             }
         }
 
+        public static void LoadMessageBoards()
+        {
+            messageBoards = new List<MessageBoard>();
+            if (!File.Exists(Environment.CurrentDirectory + "\\msgboards.txt"))
+            {
+                File.Create(Environment.CurrentDirectory + "\\msgboards.txt").Close();
+            }
+            string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\msgboards.txt");
+            foreach(string line in lines)
+            {
+                messageBoards.Add(new MessageBoard(line));
+            }
+        }
+
         public static void SaveAccounts()
         {
             List<string> lines = new List<string>();
@@ -89,11 +104,22 @@ namespace Server
             File.WriteAllLines(Environment.CurrentDirectory + "\\msglist.txt", lines);
         }
 
+        public static void SaveMessageBoards()
+        {
+            List<string> lines = new List<string>();
+            foreach (MessageBoard board in messageBoards)
+            {
+                lines.Add(board.name);
+            }
+            File.WriteAllLines(Environment.CurrentDirectory + "\\msgboards.txt", lines);
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Loading Assets...");
             LoadAccounts();
             LoadMessages();
+            LoadMessageBoards();
             sessions = new List<Session>();
             Console.WriteLine("Starting Server...");
             listener = new TcpListener(IPAddress.Any, 25565);

@@ -10,6 +10,7 @@ namespace QuantumLink
     class Program
     {
         static Client client;
+        static MessageBoardManager boardManager;
         static Help help;
         static int version = 1;
 
@@ -70,6 +71,18 @@ namespace QuantumLink
                         Console.WriteLine("[Error]: No username matches keyword.");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
+                }
+                Console.WriteLine("Message Boards:");
+                string[] board_results = client.SearchForMessageBoards(command.TrimStart("search ".ToCharArray()));
+                foreach(string board in board_results)
+                {
+                    Console.WriteLine(board);
+                }
+                if (board_results.Length == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: No message board matches keyword.");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 Console.WriteLine("Users:");
                 string[] user_results = client.SearchForUsers(command.TrimStart("search ".ToCharArray()));
@@ -166,6 +179,116 @@ namespace QuantumLink
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[Error]: You are not logged in");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "delboard")
+            {
+                if (args.Length == 2 && client.LoggedIn)
+                {
+                    if (client.runCommand("delboard\t" + args[1]) == "pass")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("[Server]: Successfuly deleted board.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[Error]: Board doesnt exists.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Insufficient arguments or you have insufficient permissions.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "newboard")
+            {
+                if(args.Length == 2 && client.LoggedIn)
+                {
+                    if(client.runCommand("newboard\t"+args[1]) == "pass")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("[Server]: Successfuly created new board.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[Error]: Board already exists.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Insufficient arguments or you have insufficient permissions.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "clearmsgboard")
+            {
+                if (args.Length == 2 && client.LoggedIn)
+                {
+                    if (client.runCommand("clearboardmsgs\t" + args[1]) == "pass")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("[Server]: Succesfully cleared all message board.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[Error]: Board doesn't exist.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Insufficient arguments or you have insufficient permissions.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "changeusername")
+            {
+                if(args.Length == 2)
+                {
+                    if (client.ChangeUsername(args[1]))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("[Server]: Succesfully changed username");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[Error]: You must log in to change your username and you must select a unique one.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Insufficient arguments.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "join")
+            {
+                try
+                {
+                    boardManager = new MessageBoardManager(ref client, args[1]);
+                    boardManager.Start();
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: No such message board exists.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
@@ -268,7 +391,6 @@ namespace QuantumLink
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("[Client]: Initializing");
             help = new Help();
-            Cache.Load();
             client = new Client();
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;

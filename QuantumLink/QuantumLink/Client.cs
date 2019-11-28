@@ -75,10 +75,15 @@ namespace QuantumLink
         public Message GetMessage(int index)
         {
             string resp = runCommand("getchmsg\t" + index);
-            Cache.values[runCommand("myinfo\tusername")+"::msg-"+index] = resp;
-            Cache.Save();
             string[] args = resp.Split('\t');
             return new Message(args[0], args[1], DateTime.Parse(args[2]), bool.Parse(args[3]),index);
+        }
+
+        public Message GetchMessageBoardMessage(string name, int index)
+        {
+            string resp = runCommand("getchboardmessage\t" +name+"\t"+ index);
+            string[] args = resp.Split('\t');
+            return new Message(args[0], args[1], DateTime.Parse(args[2]), bool.Parse(args[3]), index);
         }
 
         public int CountUnreadMessages()
@@ -92,6 +97,25 @@ namespace QuantumLink
             {
                 return int.Parse(resp);
             }
+        }
+        
+        public Message[] GetMessageBoardMessages(string boardname)
+        {
+            string count_resp = runCommand("msgboardcount\t"+boardname);
+            int count = int.Parse(count_resp);
+            int start = 0;
+            if(count - 5 >= 0)
+            {
+                start = count - 5;
+            }
+            List<Message> message = new List<Message>();
+            Thread.Sleep(100);
+            for (int i = start; i < count; i++)
+            {
+                message.Add(GetchMessageBoardMessage(boardname, i));
+                Thread.Sleep(100);
+            }
+            return message.ToArray();
         }
 
         public Message[] GetAllMessages()
@@ -171,6 +195,29 @@ namespace QuantumLink
             {
                 return resp.Split(' ');
             }
+        }
+
+        public string[] SearchForMessageBoards(string keyword)
+        {
+            string resp = runCommand("search\tmsgboards\t" + keyword);
+            if (resp == "fail")
+            {
+                return new string[] { };
+            }
+            else
+            {
+                return resp.Split(' ');
+            }
+        }
+
+        public bool ChangeUsername(string newusername)
+        {
+            string resp = runCommand("changeusername\t" + newusername);
+            if (resp != "fail")
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool CloseAccount()

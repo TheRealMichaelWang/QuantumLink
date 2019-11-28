@@ -20,6 +20,9 @@ namespace QuantumLink
             arguments.Add("login","[username] [password]");
             arguments.Add("signup", "[username] [password]");
             arguments.Add("search","[keyword]");
+            arguments.Add("newboard", "[boardname]");
+            arguments.Add("delboard", "[boardname]");
+            arguments.Add("join", "[boardname]");
             arguments.Add("closeaccount", "");
             arguments.Add("logout","");
             arguments.Add("delmsgs","");
@@ -29,7 +32,10 @@ namespace QuantumLink
             arguments.Add("quit", "");
             short_descriptions.Add("login","Logs the user into the server.");
             short_descriptions.Add("signup", "Register a Quantum Link account.");
-            short_descriptions.Add("search", "Searches for users and messages.");
+            short_descriptions.Add("search", "Searches for users, messages, and message boards.");
+            short_descriptions.Add("newboard", "Creates a new message board.");
+            short_descriptions.Add("delboard", "Deletes a existing message board.");
+            short_descriptions.Add("join", "Joins a message board.");
             short_descriptions.Add("closeaccount", "Close your Quantum Link account.");
             short_descriptions.Add("logout", "Logs out of the server.");
             short_descriptions.Add("delmsgs", "Deletes your message list.");
@@ -39,7 +45,10 @@ namespace QuantumLink
             short_descriptions.Add("quit", "Quits the app.");
             descriptions.Add("login","Logs the user into the server.");
             descriptions.Add("signup", "Register a Quantum Link account. The username must be unique.");
-            descriptions.Add("search", "Search for users or messages you recieved. Messages are displayed on top of users.");
+            descriptions.Add("search", "Search for users, message boards, or messages you recieved. Messages are displayed on top of users.");
+            descriptions.Add("newboard", "You must have an admin or moderator account to create a message board.");
+            descriptions.Add("delboard", "You must have an admin or moderator account to delete a message board.");
+            descriptions.Add("join", "Joins a message board. You dont need to sign in to perform this function.");
             descriptions.Add("closeaccount", "You will be asked to confirm whether you want to close your account before actually doing it.");
             descriptions.Add("delmsgs", "All the messages in your message list will be deleted. This may speed up the client if you have too many messages.");
             descriptions.Add("sendmsg", "Sends a message to a person registered on Quantum Link. You don't have to login to perform this function.");

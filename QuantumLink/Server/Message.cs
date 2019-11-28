@@ -117,6 +117,16 @@ namespace Server
                     return true;
                 }
             }
+            foreach(MessageBoard board in Program.messageBoards)
+            {
+                if(board.recieve_id == to)
+                {
+                    Message tosend = new Message(from, to, content, DateTime.Now, false);
+                    Program.messages.Add(tosend);
+                    Program.SaveMessages();
+                    return true;
+                }
+            }
             return false;
         }
     }

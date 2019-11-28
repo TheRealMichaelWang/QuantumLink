@@ -52,6 +52,33 @@ namespace Server
                     return "fail";
                 }
             }
+            else if(args[0] == "changeusername")
+            {
+                if(args.Length == 2 && logged_in)
+                {
+                    foreach(Account account in Program.accounts)
+                    {
+                        if(account.username == args[1])
+                        {
+                            return "fail";
+                        }
+                    }
+                    for (int i = 0; i < Program.accounts.Count; i++)
+                    {
+                        if(Program.accounts[i] == current_account)
+                        {
+                            current_account.username = args[1];
+                            Program.accounts[i].username = args[1];
+                        }
+                    }
+                    Program.SaveAccounts();
+                    return "pass";
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
             else if (args[0] == "signup")
             {
                 if (args.Length == 3 && logged_in == false)
@@ -156,6 +183,102 @@ namespace Server
                     return "fail";
                 }
             }
+            else if(args[0] == "newboard")
+            {
+                if(logged_in && args.Length == 2 && (current_account.permissions == Permissions.Moderator || current_account.permissions == Permissions.Admin))
+                {
+                    if(MessageBoard.Create(args[1]))
+                    {
+                        return "pass";
+                    }
+                    else
+                    {
+                        return "fail";
+                    }
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
+            else if(args[0] == "delboard")
+            {
+                if(logged_in && args.Length == 2 && (current_account.permissions == Permissions.Moderator || current_account.permissions == Permissions.Admin))
+                {
+                    if (MessageBoard.Delete(args[1]))
+                    {
+                        return "pass";
+                    }
+                    else
+                    {
+                        return "fail";
+                    }
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
+            else if(args[0] == "clearboardmsgs")
+            {
+                if (logged_in && args.Length == 2 && (current_account.permissions == Permissions.Moderator || current_account.permissions == Permissions.Admin))
+                {
+                    MessageBoard board = MessageBoard.GetMessageBoard(args[1]);
+                    if (board != null)
+                    {
+                        MessageBoard.ClearMessages(board);
+                        return "pass";
+                    }
+                    else
+                    {
+                        return "fail";
+                    }
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
+            else if(args[0] == "getchboardmessage")
+            {
+                if(args.Length == 3)
+                {
+                    MessageBoard board = MessageBoard.GetMessageBoard(args[1]);
+                    if (board == null)
+                    {
+                        return "fail";
+                    }
+                    try
+                    {
+                        Message msg = board.messages[int.Parse(args[2])];
+                        return msg.from + "\t" + msg.content + "\t" + msg.time + "\t" + msg.read;
+                    }
+                    catch
+                    {
+                        return "fail";
+                    }
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
+            else if(args[0] == "msgboardcount")
+            {
+                if(args.Length == 2)
+                {
+                    MessageBoard board = MessageBoard.GetMessageBoard(args[1]);
+                    if(board == null)
+                    {
+                        return "fail";
+                    }
+                    return board.messages.Length.ToString();
+                }
+                else
+                {
+                    return "fail";
+                }
+            }
             else if(args[0] == "msgcount")
             {
                 if(logged_in)
@@ -235,6 +358,15 @@ namespace Server
                     {
                         string[] results = Search.SearchUsers(args[2], 7);
                         if(results.Length == 0)
+                        {
+                            return "fail";
+                        }
+                        return string.Join(" ", results);
+                    }
+                    else if(args[1] == "msgboards")
+                    {
+                        string[] results = Search.SearchMessageBoards(args[2], 7);
+                        if (results.Length == 0)
                         {
                             return "fail";
                         }
