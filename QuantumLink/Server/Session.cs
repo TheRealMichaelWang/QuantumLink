@@ -47,10 +47,6 @@ namespace Server
                     }
                     return "fail";
                 }
-                else
-                {
-                    return "fail";
-                }
             }
             else if(args[0] == "changeusername")
             {
@@ -74,10 +70,6 @@ namespace Server
                     Program.SaveAccounts();
                     return "pass";
                 }
-                else
-                {
-                    return "fail";
-                }
             }
             else if (args[0] == "signup")
             {
@@ -87,11 +79,6 @@ namespace Server
                     {
                         return "pass";
                     }
-                    return "fail";
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if (args[0] == "closeacc")
@@ -105,19 +92,11 @@ namespace Server
                     Program.SaveAccounts();
                     return "pass";
                 }
-                else
-                {
-                    return "fail";
-                }
             }
             else if (args[0] == "logout")
             {
-                if(args.Length != 1 || logged_in == false)
-                {
-                    return "fail";
-                }
-                else
-                {
+                if(args.Length == 1 && logged_in) 
+                { 
                     current_account = null;
                     logged_in = false;
                     return "pass";
@@ -150,14 +129,6 @@ namespace Server
                             return "user";
                         }
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "serverinfo")
@@ -178,10 +149,6 @@ namespace Server
                     }
                     return "fail";
                 }
-                else
-                {
-                    return "fail";
-                }
             }
             else if(args[0] == "newboard")
             {
@@ -191,14 +158,6 @@ namespace Server
                     {
                         return "pass";
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "delboard")
@@ -209,14 +168,6 @@ namespace Server
                     {
                         return "pass";
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "clearboardmsgs")
@@ -229,14 +180,6 @@ namespace Server
                         MessageBoard.ClearMessages(board);
                         return "pass";
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "getchboardmessage")
@@ -258,10 +201,6 @@ namespace Server
                         return "fail";
                     }
                 }
-                else
-                {
-                    return "fail";
-                }
             }
             else if(args[0] == "msgboardcount")
             {
@@ -274,9 +213,33 @@ namespace Server
                     }
                     return board.messages.Length.ToString();
                 }
-                else
+            }
+            else if(args[0] == "announce")
+            {
+                if(logged_in)
                 {
-                    return "fail";
+                    Program.announcements.Add(new Announcement(args[1], current_account.username, DateTime.Now, Program.announcements.Count));
+                    Program.SaveAnnouncements();
+                    return "pass";
+                }
+            }
+            else if(args[0] == "anncount")
+            {
+                return Program.announcements.Count.ToString();
+            }
+            else if(args[0] == "getchann")
+            {
+                if(args.Length == 2)
+                {
+                    try
+                    {
+                        Announcement announcement = Program.announcements[int.Parse(args[1])];
+                        return announcement.content + "\t" + announcement.from + "\t" + announcement.posttime;
+                    }
+                    catch
+                    {
+                        return "fail";
+                    }
                 }
             }
             else if(args[0] == "msgcount")
@@ -284,10 +247,6 @@ namespace Server
                 if(logged_in)
                 {
                     return Message.CountMessages(current_account.username).ToString();
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "readmsg")
@@ -298,14 +257,6 @@ namespace Server
                     {
                         return "pass";
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "getchmsg")
@@ -322,21 +273,6 @@ namespace Server
                         return "fail";
                     }
                 }
-                else
-                {
-                    return "fail";
-                }
-            }
-            else if(args[0] == "msgcount")
-            {
-                if(logged_in)
-                {
-
-                }
-                else
-                {
-                    return "fail";
-                }
             }
             else if(args[0] == "delmsgs")
             {
@@ -344,10 +280,6 @@ namespace Server
                 {
                     Message.DeleteMessages(current_account.username);
                     return "pass";
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "search")
@@ -372,14 +304,6 @@ namespace Server
                         }
                         return string.Join(" ", results);
                     }
-                    else
-                    {
-                        return "fail";
-                    }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             else if(args[0] == "sendmsg")
@@ -392,10 +316,6 @@ namespace Server
                         {
                             return "pass";
                         }
-                        else
-                        {
-                            return "fail";
-                        }
                     }
                     else
                     {
@@ -403,15 +323,7 @@ namespace Server
                         {
                             return "pass";
                         }
-                        else
-                        {
-                            return "fail";
-                        }
                     }
-                }
-                else
-                {
-                    return "fail";
                 }
             }
             return "fail";

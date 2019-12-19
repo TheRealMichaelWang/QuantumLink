@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace QuantumLink
 {
@@ -103,14 +102,9 @@ namespace QuantumLink
         {
             string count_resp = runCommand("msgboardcount\t"+boardname);
             int count = int.Parse(count_resp);
-            int start = 0;
-            if(count - 5 >= 0)
-            {
-                start = count - 5;
-            }
             List<Message> message = new List<Message>();
             Thread.Sleep(100);
-            for (int i = start; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 message.Add(GetchMessageBoardMessage(boardname, i));
                 Thread.Sleep(100);
@@ -155,6 +149,41 @@ namespace QuantumLink
                 }
             }
             return unread_messages.ToArray();
+        }
+
+        public bool Announce(string what)
+        {
+            string resp = runCommand("announce\t"+what);
+            return (resp != "fail");
+        }
+
+        public Announcement GetAnnouncement(int index)
+        {
+            string resp = runCommand("getchann\t" + index);
+            string[] args = resp.Split('\t');
+            return new Announcement(args[0], args[1], DateTime.Parse(args[2]));
+        }
+
+        public Announcement[] GetAnnouncements(TimeSpan span)
+        {
+            DateTime since_when = DateTime.Now - span;
+            string resp = runCommand("anncount");
+            int count = int.Parse(resp);
+            List<Announcement> announcements = new List<Announcement>();
+            for (int i = count-1; i > -1; i--)
+            {
+                Announcement announcement = GetAnnouncement(i);
+                if (announcement.posttime - since_when > TimeSpan.Zero)
+                {
+                    announcements.Add(announcement);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            announcements.Reverse();
+            return announcements.ToArray();
         }
 
         public Message[] SearchForMessage(string keyword)

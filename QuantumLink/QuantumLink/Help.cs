@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace QuantumLink
 {
@@ -19,15 +18,17 @@ namespace QuantumLink
             descriptions = new Dictionary<string, string>();
             arguments.Add("login","[username] [password]");
             arguments.Add("signup", "[username] [password]");
+            arguments.Add("closeaccount", "");
+            arguments.Add("logout","");
             arguments.Add("search","[keyword]");
             arguments.Add("newboard", "[boardname]");
             arguments.Add("delboard", "[boardname]");
             arguments.Add("join", "[boardname]");
-            arguments.Add("closeaccount", "");
-            arguments.Add("logout","");
             arguments.Add("delmsgs","");
             arguments.Add("sendmsg", "");
             arguments.Add("msglist", "");
+            arguments.Add("announcements", "[since_when]");
+            arguments.Add("announce", "[msg]");
             arguments.Add("unread", "");
             arguments.Add("quit", "");
             short_descriptions.Add("login","Logs the user into the server.");
@@ -42,6 +43,8 @@ namespace QuantumLink
             short_descriptions.Add("sendmsg", "Sends a message.");
             short_descriptions.Add("msglist", "Fetches and prints your message list.");
             short_descriptions.Add("unread", "Fetches and displays unread messages.");
+            short_descriptions.Add("announcements", "Fetches and prints announcements.");
+            short_descriptions.Add("announce", "Announces a message.");
             short_descriptions.Add("quit", "Quits the app.");
             descriptions.Add("login","Logs the user into the server.");
             descriptions.Add("signup", "Register a Quantum Link account. The username must be unique.");
@@ -55,6 +58,8 @@ namespace QuantumLink
             descriptions.Add("msglist","Displays all the messages people have sent you. Note, this may take a while depending on the size of your message list.");
             descriptions.Add("unread", "Displays unread messages sent to you. Note, this may take a while depending on the size of your message list.");
             descriptions.Add("quit", "Disconnects from the QuantumLink server and closes the application. Please use this command instead of closing the window because your client will still be connected to QuantumLink servers otherwise.");
+            descriptions.Add("announcements", "Fetches all announcements since the time given in the argument. If there is no time give, then it will fetch todays announcements only. Valid time arguments are \"yestarday\", \"week\", \"month\", and \"year\".");
+            descriptions.Add("announce", "Announces a message. You must log in to perform this function.");
         }
 
         public void printTopicHelp(string topic)

@@ -3,32 +3,42 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace QuantumLink
 {
     class Program
     {
         static Client client;
-        static MessageBoardManager boardManager;
+        static MessageBoard boardManager;
         static Help help;
+        static BigTextPrinter bigText;
         static int version = 1;
 
         static bool YesNoPrompt(string prompt)
         {
-            Console.Write(prompt + "(y/n)?");
+            Console.Write(prompt + "(");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("Y");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("/");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("N");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(")>");
             string inp = Console.ReadLine();
-            if(inp == "y")
+            if(inp == "y" || inp == "Y")
             {
                 return true;
             }
-            else if(inp == "n")
+            else if(inp == "n" || inp == "N")
             {
                 return false;
             }
             else
             {
-                Console.WriteLine("[Error]: Unrecognized input. Enter y/n.");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[Error]: Unrecognized input. Enter Y/N.");
+                Console.ForegroundColor = ConsoleColor.White; 
                 return YesNoPrompt(prompt);
             }
         }
@@ -57,43 +67,30 @@ namespace QuantumLink
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("[Search]: Here are search results for \""+ command.TrimStart("search ".ToCharArray())+"\"");
                 Console.ForegroundColor = ConsoleColor.White;
+                int msgresults = 0;
                 if (client.LoggedIn)
                 {
-                    Console.WriteLine("Messages:");
                     Message[] message_results = client.SearchForMessage(command.TrimStart("search ".ToCharArray()));
                     foreach (Message message in message_results)
                     {
                         message.Print();
                     }
-                    if (message_results.Length == 0)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("[Error]: No username matches keyword.");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
+                    msgresults = message_results.Length;
                 }
-                Console.WriteLine("Message Boards:");
                 string[] board_results = client.SearchForMessageBoards(command.TrimStart("search ".ToCharArray()));
                 foreach(string board in board_results)
                 {
-                    Console.WriteLine(board);
+                    Console.WriteLine("[Board]: "+board);
                 }
-                if (board_results.Length == 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[Error]: No message board matches keyword.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.WriteLine("Users:");
                 string[] user_results = client.SearchForUsers(command.TrimStart("search ".ToCharArray()));
                 foreach(string user in user_results)
                 {
-                    Console.WriteLine(user);
+                    Console.WriteLine("[User]: "+user);
                 }
-                if(user_results.Length == 0)
+                if(user_results.Length + board_results.Length + msgresults== 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[Error]: No username matches keyword.");
+                    Console.WriteLine("[Error]: No item matches keyword.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
@@ -104,6 +101,7 @@ namespace QuantumLink
                     if (client.Login(args[1], args[2]))
                     {
                         Console.Clear();
+                        bigText.PrintRainbow("Welcome");
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("[Server]: You have succesfully logged in, " + args[1] + ".");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -171,9 +169,14 @@ namespace QuantumLink
             {
                 if (client.Logout())
                 {
+                    Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("[Server]: You have succesfully logged out.");
                     Console.ForegroundColor = ConsoleColor.White;
+                    if(YesNoPrompt("Would you like to exit the application?"))
+                    {
+                        RunCommand("quit");
+                    }
                 }
                 else
                 {
@@ -282,7 +285,7 @@ namespace QuantumLink
             {
                 try
                 {
-                    boardManager = new MessageBoardManager(ref client, args[1]);
+                    boardManager = new MessageBoard(ref client, args[1]);
                     boardManager.Start();
                 }
                 catch
@@ -311,12 +314,21 @@ namespace QuantumLink
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-            else if (command == "sendmsg")
+            else if (args[0] == "sendmsg")
             {
-                Console.Write("[Messenger]:To>");
-                string to = Console.ReadLine();
+                string to = string.Empty;
+                if(args.Length == 2)
+                {
+                    to = args[1];
+                }
+                else
+                {
+                    Console.Write("[Messenger]:To>");
+                    to = Console.ReadLine();
+                }
                 Console.Write("[Messenger]:Msg>");
                 string msg = Console.ReadLine();
+                
                 if (client.SendMessage(to, msg))
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -377,6 +389,62 @@ namespace QuantumLink
                     }
                 }
             }
+            else if(command.StartsWith("announce "))
+            {
+                string what = command.TrimStart("announce ".ToCharArray());
+                if(!client.Announce(what))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: You are not logged in");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("[Server]: Succesfully announced information.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else if(args[0] == "announcements")
+            {
+                TimeSpan span = TimeSpan.FromDays(1);
+                if (args.Length == 2)
+                {
+                    if(args[1] == "yestarday")
+                    {
+                        span = TimeSpan.FromDays(2);
+                    }
+                    else if(args[1] == "week")
+                    {
+                        span = TimeSpan.FromDays(7);
+                    }
+                    else if(args[1] == "month")
+                    {
+                        span = TimeSpan.FromDays(30);
+                    }
+                    else if(args[1] == "year")
+                    {
+                        span = TimeSpan.FromDays(365);
+                    }
+                }
+                Announcement[] announcements = client.GetAnnouncements(span);
+                if (announcements.Length == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[Client]: There are no announcments.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("ANNOUNCEMENTS:");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    foreach (Announcement announcement in announcements)
+                    {
+                        announcement.Print();
+                    }
+                }
+            }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -391,18 +459,19 @@ namespace QuantumLink
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("[Client]: Initializing");
             help = new Help();
+            bigText = new BigTextPrinter();
             client = new Client();
             Console.Clear();
+            Console.WriteLine();
+            bigText.PrintRainbow("Quantum Link");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("QUANTUM LINK");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
             Console.WriteLine("Client Version: " + version);
             Console.WriteLine("Server Version: " + client.runCommand("serverinfo\tversion"));
-            Console.WriteLine("Users: "+client.runCommand("serverinfo\tusers"));
             Console.WriteLine("Connections: " + client.runCommand("serverinfo\tconnections"));
-            
-            
-
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            RunCommand("announcements week");
             while(true)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;

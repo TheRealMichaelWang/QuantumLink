@@ -16,6 +16,7 @@ namespace Server
         public static List<Session> sessions;
         public static List<Message> messages;
         public static List<MessageBoard> messageBoards;
+        public static List<Announcement> announcements;
         public static int version = 2;
 
         static void LoadAccounts()
@@ -59,6 +60,23 @@ namespace Server
             }
         }
 
+        public static void LoadAnnouncements()
+        {
+            announcements = new List<Announcement>();
+            if (!File.Exists(Environment.CurrentDirectory + "\\announcements.txt"))
+            {
+                File.Create(Environment.CurrentDirectory + "\\announcements.txt").Close();
+            }
+            string[] lines = File.ReadAllLines(Environment.CurrentDirectory + "\\announcements.txt");
+            int i = 0;
+            foreach (string line in lines)
+            {
+                string[] args = line.Split('\t');
+                announcements.Add(new Announcement(args[0], args[1], DateTime.Parse(args[2]), i));
+                i++;
+            }
+        }
+
         public static void LoadMessageBoards()
         {
             messageBoards = new List<MessageBoard>();
@@ -97,11 +115,21 @@ namespace Server
         public static void SaveMessages()
         {
             List<string> lines = new List<string>();
-            foreach(Message message in messages)
+            foreach (Message message in messages)
             {
-                lines.Add(message.from + "\t" + message.to + "\t" + message.content + "\t" + message.time+"\t"+message.read);
+                lines.Add(message.from + "\t" + message.to + "\t" + message.content + "\t" + message.time + "\t" + message.read);
             }
             File.WriteAllLines(Environment.CurrentDirectory + "\\msglist.txt", lines);
+        }
+
+        public static void SaveAnnouncements()
+        {
+            List<string> lines = new List<string>();
+            foreach(Announcement announcement in announcements)
+            {
+                lines.Add(announcement.content + "\t" + announcement.from + "\t" + announcement.posttime);
+            }
+            File.WriteAllLines(Environment.CurrentDirectory + "\\announcements.txt", lines);
         }
 
         public static void SaveMessageBoards()
@@ -119,6 +147,7 @@ namespace Server
             Console.WriteLine("Loading Assets...");
             LoadAccounts();
             LoadMessages();
+            LoadAnnouncements();
             LoadMessageBoards();
             sessions = new List<Session>();
             Console.WriteLine("Starting Server...");

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="Announcement.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageBoard.cs" />
     <Compile Include="Program.cs" />
