@@ -461,6 +461,11 @@ namespace QuantumLink
             help = new Help();
             bigText = new BigTextPrinter();
             client = new Client();
+            bool run_client = true;
+            if(!client.Connect() && YesNoPrompt("The server is offline and will be online shortly. Would you like to quit quantum link?"))
+            {
+                Process.GetCurrentProcess().Kill();
+            }
             Console.Clear();
             Console.WriteLine();
             bigText.PrintRainbow("Quantum Link");
@@ -472,7 +477,7 @@ namespace QuantumLink
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             RunCommand("announcements week");
-            while(true)
+            while (run_client) 
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 if(client.LoggedIn)

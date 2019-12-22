@@ -17,13 +17,32 @@ namespace QuantumLink
             get;
             private set;
         }
+        public bool Connected
+        {
+            get
+            {
+                return client.Connected;
+            }
+        }
 
         public Client()
         {
+            
+        }
+
+        public bool Connect()
+        {
             client = new TcpClient();
             int connectattempt = 0;
-            while(true)
+            while (true)
             {
+                if(connectattempt == 4)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Could not connect. Exceeded 3  re-attempt limit.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return false;
+                }
                 try
                 {
                     connectattempt++;
@@ -33,17 +52,25 @@ namespace QuantumLink
                 }
                 catch
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[Error]: Connection faliure! Reattempt no. "+(connectattempt+1)+".");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    if (connectattempt != 4)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("[Error]: Connection faliure! Re-attempt no. " + (connectattempt) + ".");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                 }
             }
             stream = client.GetStream();
             LoggedIn = false;
+            return true;
         }
 
         public string runCommand(string command)
         {
+            if(!Connected)
+            {
+                return "unconnected";
+            }
             byte[] send = ASCIIEncoding.Default.GetBytes(command);
             stream.Write(send, 0, send.Length);
             while(client.Available == 0)

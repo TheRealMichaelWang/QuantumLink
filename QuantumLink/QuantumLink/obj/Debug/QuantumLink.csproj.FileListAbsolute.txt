@@ -4,3 +4,10 @@ C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\Quantum
 C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.exe
 C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.pdb
 C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.csprojAssemblyReference.cache
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\bin\Debug\QuantumLink.exe.config
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\bin\Debug\QuantumLink.exe
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\bin\Debug\QuantumLink.pdb
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.csprojAssemblyReference.cache
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.csproj.CoreCompileInputs.cache
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.exe
+C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLink\obj\Debug\QuantumLink.pdb
