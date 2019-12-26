@@ -13,6 +13,7 @@ namespace Server
     {
         public static List<Account> accounts;
         static TcpListener listener;
+        public static CloudData cloudData;
         public static List<Session> sessions;
         public static List<Message> messages;
         public static List<MessageBoard> messageBoards;
@@ -150,6 +151,8 @@ namespace Server
             LoadAnnouncements();
             LoadMessageBoards();
             sessions = new List<Session>();
+            cloudData = new CloudData();
+            cloudData.Load();
             Console.WriteLine("Starting Server...");
             listener = new TcpListener(IPAddress.Any, 25565);
             listener.Start();

@@ -326,6 +326,22 @@ namespace Server
                     }
                 }
             }
+            else if(args[0] == "writedata")
+            {
+                if(args.Length == 4 && logged_in)
+                {
+                    Program.cloudData.Write(args[1], current_account.username, args[2], args[3]);
+                    Program.cloudData.Save();
+                    return "pass";
+                }
+            }
+            else if(args[0] == "readdata")
+            {
+                if(args.Length == 3 && logged_in)
+                {
+                    return Program.cloudData.Read(args[1], current_account.username, args[2]);
+                }
+            }
             return "fail";
         }
 

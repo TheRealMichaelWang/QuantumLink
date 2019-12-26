@@ -17,3 +17,4 @@ ANONYMOUS_USER	msgboard::CoolShit	asshol!	12/17/2019 8:56:57 PM	False
 ANONYMOUS_USER	msgboard::CoolShit	COOLSHIT	12/17/2019 8:57:01 PM	False
 ANONYMOUS_USER	msgboard::CoolShit	motherfucking hit	12/17/2019 8:57:06 PM	False
 ANONYMOUS_USER	msgboard::CoolShit	I'm goonna be in ha fuckin waii	12/17/2019 8:57:16 PM	False
+MichaelWang	msgboard::CoolShit	jackas motherfuckers!	12/23/2019 1:26:24 PM	False
