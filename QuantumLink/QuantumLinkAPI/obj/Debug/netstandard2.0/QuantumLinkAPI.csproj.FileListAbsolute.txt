@@ -6,3 +6,11 @@ C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumL
 C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.AssemblyInfo.cs
 C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.dll
 C:\Users\Michael Wang\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.pdb
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\bin\Debug\netstandard2.0\QuantumLinkAPI.deps.json
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\bin\Debug\netstandard2.0\QuantumLinkAPI.dll
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\bin\Debug\netstandard2.0\QuantumLinkAPI.pdb
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.csprojAssemblyReference.cache
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.AssemblyInfo.cs
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.dll
+C:\Users\Administrator\Documents\Visual Studio 2019\Projects\QuantumLink\QuantumLinkAPI\obj\Debug\netstandard2.0\QuantumLinkAPI.pdb

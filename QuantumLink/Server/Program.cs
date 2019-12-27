@@ -18,7 +18,7 @@ namespace Server
         public static List<Message> messages;
         public static List<MessageBoard> messageBoards;
         public static List<Announcement> announcements;
-        public static int version = 2;
+        public static int version = 1;
 
         static void LoadAccounts()
         {

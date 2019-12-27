@@ -477,6 +477,9 @@ namespace QuantumLink
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             RunCommand("announcements week");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("[Info]: Enter \"help\" for help.");
+            Console.ForegroundColor = ConsoleColor.White;
             while (run_client) 
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
