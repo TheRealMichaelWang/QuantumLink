@@ -69,7 +69,7 @@ namespace QuantumLinkAPI
             {
                 return "unconnected";
             }
-            byte[] send = ASCIIEncoding.Default.GetBytes(command);
+            byte[] send = ASCIIEncoding.ASCII.GetBytes(command);
             stream.Write(send, 0, send.Length);
             while (client.Available == 0)
             {

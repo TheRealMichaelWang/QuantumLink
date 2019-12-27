@@ -361,13 +361,13 @@ namespace Server
                     last_response = DateTime.Now;
                     byte[] brecieve = new byte[client.Available];
                     stream.Read(brecieve, 0, brecieve.Length);
-                    string recieve = ASCIIEncoding.Default.GetString(brecieve);
+                    string recieve = ASCIIEncoding.ASCII.GetString(brecieve);
                     if(recieve == "close")
                     {
                         client.Close();
                         break;
                     }
-                    byte[] send = ASCIIEncoding.Default.GetBytes(RunCommand(recieve));
+                    byte[] send = ASCIIEncoding.ASCII.GetBytes(RunCommand(recieve));
                     stream.Write(send, 0, send.Length);
                 }
             }
