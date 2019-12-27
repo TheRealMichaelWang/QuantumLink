@@ -44,6 +44,8 @@ namespace QuantumLink
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[Error]: Error fetching message. Trying again.");
                     Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("[Input]: Press ANY key to continue...");
+                    Console.ReadKey();
                 }
             }
         }
