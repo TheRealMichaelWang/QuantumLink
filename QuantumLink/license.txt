@@ -1,0 +1,8 @@
+QUANTUM LINK
+
+(C) MICHAEL WANG 2019
+
+By using this product, you agree to the following terms.
+
+1. You can not decompile the application.
+2. You must use the QuantumLink client as the sole method of communicating with QuantumLink servers. Otherwise, you breeched the contract.

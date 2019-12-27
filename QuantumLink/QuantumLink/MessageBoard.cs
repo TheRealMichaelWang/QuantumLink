@@ -41,7 +41,9 @@ namespace QuantumLink
                 }
                 catch
                 {
-                    ;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[Error]: Error fetching message. Trying again.");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
         }
